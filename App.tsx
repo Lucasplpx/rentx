@@ -21,6 +21,7 @@ import { View } from 'react-native';
 import { CarDetails } from './src/screens/CarDetails';
 import { Scheduling } from './src/screens/Scheduling';
 import { SchedulingDetails } from './src/screens/SchedulingDetails';
+import { SchedulingComplete } from './src/screens/SchedulingComplete';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -61,7 +62,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <ThemeProvider theme={theme}>
-        <SchedulingDetails />
+        <SchedulingComplete />
       </ThemeProvider>
     </View>
   );
