@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -18,14 +18,38 @@ import {
   Footer,
 } from './styles';
 import { Button } from '../../components/Button';
-import { Calendar } from '../../components/Calendar';
+import { CalendarProps } from 'react-native-calendars';
+import { Calendar, DayProps } from '../../components/Calendar';
+import { generateInterval } from '../../components/Calendar/generateInterval';
 
 export const Scheduling = () => {
   const navigation = useNavigation();
   const theme = useTheme();
 
+  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>(
+    {} as DayProps
+  );
+
+  const [markedDates, setMarkedDates] = useState<CalendarProps>(
+    {} as CalendarProps
+  );
+
   function handleConfirmRental() {
     navigation.navigate('SchedulingDetails');
+  }
+
+  function handleChangeDate(date: DayProps) {
+    let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+    let end = date;
+
+    if (start.timestamp > end.timestamp) {
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedDate(end);
+    const interval = generateInterval(start, end);
+    setMarkedDates(interval);
   }
 
   return (
@@ -56,7 +80,7 @@ export const Scheduling = () => {
         </RentalPeriod>
       </Header>
       <Content>
-        <Calendar />
+        <Calendar markedDates={markedDates} onDayPress={handleChangeDate} />
       </Content>
 
       <Footer>
