@@ -16,17 +16,6 @@ export const Home = () => {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const carData = {
-    brand: 'Audi',
-    name: 'RS 5 Coupé',
-    rent: {
-      period: 'AO DIA',
-      price: 120,
-    },
-    thumbnail:
-      'https://e7.pngegg.com/pngimages/707/596/png-clipart-2015-audi-a3-car-2016-audi-a3-mercedes-benz-cla-class-audi-compact-car-sedan.png',
-  };
-
   useEffect(() => {
     (async () => {
       try {
@@ -40,8 +29,8 @@ export const Home = () => {
     })();
   }, []);
 
-  function handleCarDetails() {
-    navigation.navigate('CarDetails');
+  function handleCarDetails(car: CarDTO) {
+    navigation.navigate('CarDetails', { car });
   }
 
   return (
@@ -66,7 +55,7 @@ export const Home = () => {
           data={cars}
           keyExtractor={(item: CarDTO) => item.id}
           renderItem={({ item }) => (
-            <Car data={item} onPress={handleCarDetails} />
+            <Car data={item} onPress={() => handleCarDetails(item)} />
           )}
         />
       )}
