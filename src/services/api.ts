@@ -1,5 +1,6 @@
 import axios from 'axios';
+import { HOST } from './env';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3333',
+  baseURL: HOST,
 });
