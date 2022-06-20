@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton';
 import { Car } from '../../components/Car';
 import { CarDTO } from '../../dtos/CarDTO';
-import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 import { api } from '../../services/api';
 
 import { AntDesign } from '@expo/vector-icons';
@@ -74,7 +74,7 @@ export const MyCars = () => {
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <Content>
           <Appointments>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  BackHandler,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -30,7 +35,7 @@ import Logo from '../../assets/logo.svg';
 import { Car } from '../../components/Car';
 import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
-import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 export const Home = () => {
   const navigation = useNavigation();
@@ -79,6 +84,12 @@ export const Home = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+  }, []);
+
   function handleCarDetails(car: CarDTO) {
     navigation.navigate('CarDetails', { car });
   }
@@ -98,12 +109,12 @@ export const Home = () => {
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
 
-          <TotalCars>Total de {cars.length} carros</TotalCars>
+          {!loading && <TotalCars>Total de {cars.length} carros</TotalCars>}
         </HeaderContent>
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <CarList
           data={cars}

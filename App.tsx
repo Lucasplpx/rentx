@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { LogBox, View } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import { Home } from './src/screens/Home';
 
@@ -17,10 +18,13 @@ import {
 } from '@expo-google-fonts/archivo';
 
 import theme from './src/styles/theme';
-import { View } from 'react-native';
 
 import { Routes } from './src/routes';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+LogBox.ignoreLogs([
+  "ViewPropTypes will be removed from React Native. Migrate to ViewPropTypes exported from 'deprecated-react-native-prop-types'.",
+]);
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
