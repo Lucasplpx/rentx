@@ -20,6 +20,7 @@ import theme from './src/styles/theme';
 import { View } from 'react-native';
 
 import { Routes } from './src/routes';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -58,10 +59,12 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <ThemeProvider theme={theme}>
-        <Routes />
-      </ThemeProvider>
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <ThemeProvider theme={theme}>
+          <Routes />
+        </ThemeProvider>
+      </View>
+    </GestureHandlerRootView>
   );
 }
