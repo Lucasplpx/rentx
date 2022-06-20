@@ -2,6 +2,10 @@ import { TouchableOpacityProps } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+interface ButtonTextProps {
+  light: boolean;
+}
+
 interface ButtonProps extends TouchableOpacityProps {
   color: string;
 }
@@ -16,8 +20,9 @@ export const Container = styled.TouchableOpacity<ButtonProps>`
   background-color: ${({ color }) => color};
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text<ButtonTextProps>`
   font-family: ${({ theme }) => theme.fonts.primary_500};
   font-size: ${RFValue(15)}px;
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme, light }) =>
+    light ? theme.colors.header : theme.colors.shape};
 `;
