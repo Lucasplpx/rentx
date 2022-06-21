@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StatusBar,
   KeyboardAvoidingView,
@@ -13,6 +13,9 @@ import { PasswordInput } from '../../components/PasswordInput';
 import { Container, Footer, Header, SubTitle, Form, Title } from './styles';
 
 export const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const theme = useTheme();
 
   return (
@@ -39,9 +42,16 @@ export const SignIn = () => {
               keyboardType='email-address'
               autoCorrect={false}
               autoCapitalize='none'
+              onChangeText={setEmail}
+              value={email}
             />
 
-            <PasswordInput iconName='lock' placeholder='Senha' />
+            <PasswordInput
+              value={password}
+              onChangeText={setPassword}
+              iconName='lock'
+              placeholder='Senha'
+            />
           </Form>
 
           <Footer>
