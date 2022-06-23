@@ -8,6 +8,7 @@ import { Scheduling } from '../screens/Scheduling';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
 import { SchedulingComplete } from '../screens/SchedulingComplete';
 import { MyCars } from '../screens/MyCars';
+import { SignUpFirstStep } from '../screens/SignUp/SignUpFirstStep';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -18,6 +19,7 @@ export function StackRoutes() {
     <Navigator screenOptions={{ headerShown: false }} initialRouteName='SignIn'>
       {/* <Screen name='Splash' component={Splash} /> */}
       <Screen name='SignIn' component={SignIn} />
+      <Screen name='SignUpFirstStep' component={SignUpFirstStep} />
       <Screen
         name='Home'
         options={{ gestureEnabled: false }}
