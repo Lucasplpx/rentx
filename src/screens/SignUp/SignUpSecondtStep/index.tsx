@@ -1,6 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -22,12 +23,37 @@ import {
   Title,
 } from './styles';
 
+interface Params {
+  user: {
+    name: string;
+    email: string;
+    driverLicense: string;
+  };
+}
+
 export const SignUpSecondtStep = () => {
   const { goBack } = useNavigation();
+  const route = useRoute();
   const theme = useTheme();
+
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const { user } = route.params as Params;
 
   function handleBack() {
     goBack();
+  }
+
+  function handleRegister() {
+    try {
+      if (!password || !passwordConfirm) {
+        return Alert.alert('Informe a senha e a confirmação dela.');
+      }
+      if (password !== passwordConfirm) {
+        return Alert.alert('As senhas não são iguais.');
+      }
+    } catch (error) {}
   }
 
   return (
@@ -47,10 +73,24 @@ export const SignUpSecondtStep = () => {
           <Form>
             <FormTitle>2. Senha</FormTitle>
 
-            <PasswordInput iconName='lock' placeholder='Senha' />
-            <PasswordInput iconName='lock' placeholder='Repetir Senha' />
+            <PasswordInput
+              iconName='lock'
+              placeholder='Senha'
+              onChangeText={setPassword}
+              value={password}
+            />
+            <PasswordInput
+              iconName='lock'
+              placeholder='Repetir Senha'
+              onChangeText={setPasswordConfirm}
+              value={passwordConfirm}
+            />
           </Form>
-          <Button color={theme.colors.success} title='Cadastrar' />
+          <Button
+            color={theme.colors.success}
+            title='Cadastrar'
+            onPress={handleRegister}
+          />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
