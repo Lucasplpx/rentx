@@ -32,7 +32,7 @@ interface Params {
 }
 
 export const SignUpSecondtStep = () => {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const route = useRoute();
   const theme = useTheme();
 
@@ -53,6 +53,12 @@ export const SignUpSecondtStep = () => {
       if (password !== passwordConfirm) {
         return Alert.alert('As senhas não são iguais.');
       }
+
+      navigate('Confirmation', {
+        nextScreenRoute: 'SignIn',
+        title: 'Conta Criada!',
+        message: `Agora é só fazer login\ne aproveitar.`,
+      });
     } catch (error) {}
   }
 
