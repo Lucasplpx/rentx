@@ -10,8 +10,8 @@ import { useTheme } from 'styled-components';
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Button';
-import { Input } from '../../../components/Input';
 import { PasswordInput } from '../../../components/PasswordInput';
+import { api } from '../../../services/api';
 
 import {
   Container,
@@ -45,21 +45,31 @@ export const SignUpSecondtStep = () => {
     goBack();
   }
 
-  function handleRegister() {
-    try {
-      if (!password || !passwordConfirm) {
-        return Alert.alert('Informe a senha e a confirmação dela.');
-      }
-      if (password !== passwordConfirm) {
-        return Alert.alert('As senhas não são iguais.');
-      }
+  async function handleRegister() {
+    if (!password || !passwordConfirm) {
+      return Alert.alert('Informe a senha e a confirmação dela.');
+    }
+    if (password !== passwordConfirm) {
+      return Alert.alert('As senhas não são iguais.');
+    }
 
-      navigate('Confirmation', {
-        nextScreenRoute: 'SignIn',
-        title: 'Conta Criada!',
-        message: `Agora é só fazer login\ne aproveitar.`,
+    await api
+      .post(`/users`, {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      })
+      .then((res) => {
+        navigate('Confirmation', {
+          nextScreenRoute: 'SignIn',
+          title: 'Conta Criada!',
+          message: `Agora é só fazer login\ne aproveitar.`,
+        });
+      })
+      .catch((err) => {
+        Alert.alert('Opa', 'Não foi possível cadastrar');
       });
-    } catch (error) {}
   }
 
   return (
