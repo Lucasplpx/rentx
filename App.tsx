@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogBox, View } from 'react-native';
 import { ThemeProvider } from 'styled-components';
-import { Home } from './src/screens/Home';
+import { AppProvider } from './src/hooks';
 
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -66,7 +66,9 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <ThemeProvider theme={theme}>
-          <Routes />
+          <AppProvider>
+            <Routes />
+          </AppProvider>
         </ThemeProvider>
       </View>
     </GestureHandlerRootView>
