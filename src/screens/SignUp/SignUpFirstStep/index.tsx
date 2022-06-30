@@ -21,7 +21,6 @@ import {
   SubTitle,
   Title,
 } from './styles';
-import { useAuth } from '../../../hooks/auth';
 
 export const SignUpFirstStep = () => {
   const { goBack, navigate } = useNavigation();
@@ -29,8 +28,7 @@ export const SignUpFirstStep = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [driverLicense, setDriverLicense] = useState('');
-  const { user } = useAuth();
-  console.log('SignUpFirstStep', user);
+
 
   function handleBack() {
     goBack();
