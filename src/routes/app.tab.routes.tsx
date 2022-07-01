@@ -32,7 +32,7 @@ export function AppTabRoutes() {
   return (
     <Navigator screenOptions={configScreenOptions}>
       <Screen
-        name='Home'
+        name='HomeTab'
         component={AppStackRoutes}
         options={{
           tabBarIcon: ({ focused, color }) => (
