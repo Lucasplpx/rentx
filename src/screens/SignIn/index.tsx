@@ -17,7 +17,6 @@ import { PasswordInput } from '../../components/PasswordInput';
 
 import { Container, Footer, Header, SubTitle, Form, Title } from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { database } from '../../database';
 
 export const SignIn = () => {
   const { navigate } = useNavigation();
@@ -26,16 +25,6 @@ export const SignIn = () => {
   const { signIn } = useAuth();
 
   const theme = useTheme();
-
-  useEffect(() => {
-    async function loadData() {
-      const userCollection = database.get('users');
-      const users = await userCollection.query().fetch();
-      console.log('user', users);
-    }
-
-    loadData();
-  }, []);
 
   async function handleSignIn() {
     try {
