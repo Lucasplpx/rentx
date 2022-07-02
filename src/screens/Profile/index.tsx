@@ -7,6 +7,8 @@ import {
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
+import * as ImagePicker from 'expo-image-picker';
+
 import { useAuth } from '../../hooks/auth';
 
 import { useNavigation } from '@react-navigation/native';
@@ -39,15 +41,35 @@ export const Profile = () => {
   const navigation = useNavigation();
 
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
+  const [avatar, setAvatar] = useState(user.avatar);
+  const [name, setName] = useState(user.name);
+  const [driverLicense, setDriverLicense] = useState(user.driver_license);
 
   function handleBack() {
     navigation.goBack();
   }
 
-  function handleSinOut() {}
+  function handleSignOut() {}
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected);
+  }
+
+  async function handleAvatarSelect() {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (result.cancelled) {
+      return;
+    }
+
+    if (result.uri) {
+      setAvatar(result.uri);
+    }
   }
 
   return (
@@ -59,18 +81,20 @@ export const Profile = () => {
               <BackButton color={theme.colors.shape} onPress={handleBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
 
-              <LogoutButton onPress={handleSinOut}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name='power' size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
             <PhotoContainer>
-              <Photo
-                source={{
-                  uri: 'https://avatars.githubusercontent.com/u/35532721?v=4',
-                }}
-              />
+              {!!avatar && (
+                <Photo
+                  source={{
+                    uri: avatar,
+                  }}
+                />
+              )}
 
-              <PhotoButton onPress={handleSinOut}>
+              <PhotoButton onPress={handleAvatarSelect}>
                 <Feather name='camera' size={24} color={theme.colors.shape} />
               </PhotoButton>
             </PhotoContainer>
@@ -100,6 +124,7 @@ export const Profile = () => {
                   placeholder='Nome'
                   autoCorrect={false}
                   defaultValue={user.name}
+                  onChangeText={setName}
                 />
                 <Input
                   iconName='mail'
@@ -111,6 +136,7 @@ export const Profile = () => {
                   placeholder='CNH'
                   keyboardType='numeric'
                   defaultValue={user.driver_license}
+                  onChangeText={setDriverLicense}
                 />
               </Section>
             ) : (
