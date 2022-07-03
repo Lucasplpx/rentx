@@ -36,7 +36,7 @@ import {
 } from './styles';
 
 export const Profile = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -49,7 +49,9 @@ export const Profile = () => {
     navigation.goBack();
   }
 
-  function handleSignOut() {}
+  function handleSignOut() {
+    signOut();
+  }
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected);
