@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Yup from 'yup';
@@ -41,6 +42,7 @@ export const Profile = () => {
   const { user, signOut, updateUser } = useAuth();
   const theme = useTheme();
   const navigation = useNavigation();
+  const netInfo = useNetInfo();
 
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
@@ -70,7 +72,14 @@ export const Profile = () => {
   }
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
-    setOption(optionSelected);
+    if (netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert(
+        'Você está Offline',
+        'Para mudar a senha, conecte-se a Internet'
+      );
+    } else {
+      setOption(optionSelected);
+    }
   }
 
   async function handleAvatarSelect() {
