@@ -4,6 +4,7 @@ import { TouchableOpacityProps } from 'react-native';
 import GasolineSvg from '../../assets/gasoline.svg';
 import { CarDTO } from '../../dtos/CarDTO';
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
+import { Car as ModelCar } from '../../database/model/Car';
 
 import {
   Container,
@@ -19,7 +20,7 @@ import {
 } from './styles';
 
 interface Props extends TouchableOpacityProps {
-  data: CarDTO;
+  data: ModelCar;
 }
 
 export const Car = ({ data, ...rest }: Props) => {
