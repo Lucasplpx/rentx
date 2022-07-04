@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { CarList, Container, Header, HeaderContent, TotalCars } from './styles';
 
@@ -15,6 +16,14 @@ export const Home = () => {
   const navigation = useNavigation();
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+    if (netInfo.isConnected) {
+      Alert.alert('Você está On-Line');
+    }
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
